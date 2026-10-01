@@ -230,6 +230,13 @@
     @media (max-width: 640px) {
       .hero-cta { margin-bottom: 28px; }
       .plans { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 420px) {
+      /* Small phones: keep the two store badges side by side, as on larger phones */
+      .stores { flex-wrap: nowrap; gap: 10px; }
+      .stores .store { flex: 1; min-width: 0; padding: 9px 12px; transform: none; }
+      .stores .store b { font-size: 15px; }
+      .stores .store svg { width: 22px; height: 22px; }
       section { padding: 56px 0; }
       footer .right { margin-left: 0; }
     }
