@@ -1,0 +1,533 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>RenewalGuard — Stop paying for subscriptions you forgot to cancel</title>
+  <meta name="description" content="Forgot to cancel a free trial again? RenewalGuard tracks your subscriptions, trials and bills and reminds you before anything renews. No bank login. Free for up to 5 subscriptions." />
+  <meta name="theme-color" content="#0F172A" />
+  <link rel="icon" type="image/png" href="/favicon.png" />
+  <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+  <link rel="canonical" href="https://getrenewalguard.com/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="RenewalGuard — Never get caught by a surprise renewal" />
+  <meta property="og:description" content="Subscriptions, bills and free trials in one place, with reminders before anything renews. No bank login." />
+  <meta property="og:image" content="https://getrenewalguard.com/og-image.png" />
+  <meta property="og:url" content="https://getrenewalguard.com/" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --bg: #faf9f6; --card: #ffffff; --alt: #f5f5f4; --border: #e7e5e4;
+      --ink: #0f172a; --text: #334155; --subtle: #64748b; --faint: #94a3b8;
+      --amber: #f59e0b; --amber-deep: #d97706; --amber-text: #b45309; --amber-soft: #fffbeb; --amber-badge: #fef3c7;
+      --hero: #0f172a; --hero-2: #1e293b; --green: #059669; --green-soft: #ecfdf5; --rose: #be123c; --rose-soft: #fff1f2; --violet: #7c3aed; --violet-soft: #f5f3ff;
+      --shadow: 0 20px 50px -20px rgba(15, 23, 42, .25);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b1120; --card: #141b2d; --alt: #182033; --border: #263045;
+        --ink: #f1f5f9; --text: #cbd5e1; --subtle: #94a3b8; --faint: #64748b;
+        --amber-text: #fbbf24; --amber-soft: rgba(245, 158, 11, .12); --amber-badge: rgba(245, 158, 11, .22);
+        --hero: #1e293b; --hero-2: #273449; --green: #10b981; --green-soft: rgba(16, 185, 129, .14); --rose: #fb7185; --rose-soft: rgba(244, 63, 94, .14); --violet: #a78bfa; --violet-soft: rgba(139, 92, 246, .16);
+        --shadow: 0 20px 50px -20px rgba(0, 0, 0, .6);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; background: var(--bg); color: var(--text); font: 16px/1.6 Inter, system-ui, -apple-system, Segoe UI, Roboto, sans-serif; -webkit-font-smoothing: antialiased; }
+    a { color: inherit; }
+    .wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+    h1, h2, h3 { color: var(--ink); line-height: 1.15; letter-spacing: -.02em; margin: 0; }
+    .eyebrow { font-size: 12px; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: var(--amber-text); }
+
+    /* Nav */
+    nav { position: sticky; top: 0; z-index: 10; background: color-mix(in srgb, var(--bg) 88%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); }
+    nav .wrap { display: flex; align-items: center; height: 64px; gap: 24px; }
+    .brand { display: flex; align-items: center; gap: 10px; font-weight: 700; color: var(--ink); text-decoration: none; font-size: 18px; }
+    .brand img { width: 32px; height: 32px; border-radius: 9px; }
+    nav .links { margin-left: auto; display: flex; gap: 22px; font-size: 15px; }
+    nav .links a { text-decoration: none; color: var(--subtle); font-weight: 500; }
+    nav .links a:hover { color: var(--ink); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; border-radius: 999px; padding: 12px 22px; font-weight: 600; font-size: 15px; text-decoration: none; border: 0; cursor: pointer; transition: transform .15s, opacity .15s; }
+    .btn:hover { transform: translateY(-1px); }
+    .btn-dark { background: var(--ink); color: var(--bg); }
+    .btn-amber { background: var(--amber); color: #0f172a; }
+    .btn-ghost { background: var(--alt); color: var(--ink); }
+    nav .btn { padding: 9px 18px; font-size: 14px; }
+
+    /* Hero */
+    .hero { padding: 72px 0 40px; }
+    .hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 56px; align-items: center; }
+    .hero h1 { font-size: clamp(38px, 6vw, 60px); font-weight: 800; margin: 16px 0 18px; }
+    .hero h1 span { color: var(--amber-deep); }
+    .hero p.lead { font-size: 19px; color: var(--subtle); max-width: 520px; margin: 0 0 28px; }
+    .stores { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; }
+    .store { display: inline-flex; align-items: center; gap: 10px; background: var(--ink); color: var(--bg); border-radius: 12px; padding: 9px 16px; text-decoration: none; min-width: 168px; position: relative; }
+    .store svg { width: 24px; height: 24px; fill: currentColor; flex: none; }
+    .store small { display: block; font-size: 10px; opacity: .8; line-height: 1.2; }
+    .store b { display: block; font-size: 16px; line-height: 1.2; }
+    em.soon, em.m-badge { font-style: normal; }
+    .soon { position: absolute; top: -9px; right: -8px; background: var(--amber); color: #0f172a; font-size: 10px; font-weight: 800; letter-spacing: .06em; padding: 2px 8px; border-radius: 999px; }
+    .webapp { margin-top: 18px; font-size: 15px; color: var(--subtle); }
+    .webapp a { color: var(--amber-text); font-weight: 600; }
+    .trust { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; font-size: 14px; color: var(--subtle); }
+    .trust span { display: inline-flex; align-items: center; gap: 6px; }
+    .trust svg { width: 16px; height: 16px; stroke: var(--green); fill: none; stroke-width: 2.4; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* Phone mockup */
+    .phone { justify-self: center; width: 300px; border-radius: 44px; padding: 12px; background: #0b0f19; box-shadow: var(--shadow), 0 0 0 1px rgba(255,255,255,.06) inset; transform: rotate(2deg); }
+    .screen { border-radius: 34px; background: var(--bg); overflow: hidden; padding: 18px 14px 20px; height: 600px; position: relative; }
+    .notch { width: 96px; height: 26px; background: #0b0f19; border-radius: 0 0 16px 16px; margin: -18px auto 10px; }
+    .m-eyebrow { font-size: 9px; font-weight: 700; letter-spacing: .16em; color: var(--amber-text); }
+    .m-title { font-size: 19px; font-weight: 700; color: var(--ink); margin: 4px 0 12px; }
+    .m-spend { background: var(--hero); border-radius: 18px; padding: 14px; color: #fff; position: relative; overflow: hidden; }
+    .m-spend::after { content: ""; position: absolute; right: -30px; top: -40px; width: 110px; height: 110px; border-radius: 50%; background: rgba(251,191,36,.18); }
+    .m-spend small { color: #cbd5e1; font-size: 10px; }
+    .m-spend b { display: block; font-size: 26px; letter-spacing: -.02em; margin-top: 2px; }
+    .m-seg { display: inline-flex; background: rgba(255,255,255,.1); border-radius: 99px; padding: 3px; margin-top: 10px; font-size: 9px; }
+    .m-seg i { font-style: normal; padding: 4px 9px; border-radius: 99px; color: #cbd5e1; }
+    .m-seg i.on { background: #fff; color: #0f172a; font-weight: 700; }
+    .m-h { font-size: 12px; font-weight: 600; color: var(--ink); margin: 14px 0 8px; }
+    .m-card { display: flex; align-items: center; gap: 10px; background: var(--card); border: 1px solid var(--border); border-radius: 14px; padding: 9px 10px; margin-bottom: 7px; }
+    .m-logo { width: 30px; height: 30px; border-radius: 8px; display: grid; place-items: center; color: #fff; font-weight: 800; font-size: 13px; flex: none; }
+    .m-card > div:not(.m-logo) { flex: 1; min-width: 0; }
+    .m-card strong { display: block; font-size: 12px; color: var(--ink); }
+    .m-card span { font-size: 10px; color: var(--subtle); }
+    .m-badge { font-size: 9px; font-weight: 700; padding: 3px 8px; border-radius: 99px; background: var(--amber-soft); color: var(--amber-text); white-space: nowrap; }
+    .m-badge.red { background: var(--rose-soft); color: var(--rose); }
+    .m-badge.trial { background: var(--violet-soft); color: var(--violet); }
+    .m-toast { position: absolute; left: 10px; right: 10px; top: 46px; background: color-mix(in srgb, var(--card) 92%, transparent); backdrop-filter: blur(8px); border: 1px solid var(--border); border-radius: 16px; padding: 10px 12px; display: flex; gap: 10px; box-shadow: var(--shadow); animation: drop 6s ease-in-out infinite; }
+    .m-toast img { width: 26px; height: 26px; border-radius: 7px; }
+    .m-toast strong { display: block; font-size: 11px; color: var(--ink); }
+    .m-toast span { font-size: 10px; color: var(--subtle); }
+    @keyframes drop { 0%, 8% { transform: translateY(-140%); opacity: 0 } 16%, 70% { transform: none; opacity: 1 } 80%, 100% { transform: translateY(-140%); opacity: 0 } }
+    @media (prefers-reduced-motion: reduce) { .m-toast { animation: none; } }
+
+    /* Sections */
+    section { padding: 72px 0; }
+    .section-head { max-width: 640px; margin-bottom: 40px; }
+    .section-head h2 { font-size: clamp(28px, 4vw, 40px); margin: 10px 0 12px; font-weight: 800; }
+    .section-head p { color: var(--subtle); font-size: 18px; margin: 0; }
+    .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .feature { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 24px; }
+    .feature .ico { width: 44px; height: 44px; border-radius: 13px; background: var(--amber-soft); display: grid; place-items: center; margin-bottom: 16px; }
+    .feature .ico svg { width: 22px; height: 22px; stroke: var(--amber-deep); fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+    .feature h3 { font-size: 18px; margin-bottom: 6px; }
+    .feature p { margin: 0; color: var(--subtle); font-size: 15px; }
+
+    .privacy-band { background: var(--hero); color: #cbd5e1; border-radius: 32px; padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .privacy-band h2 { color: #fff; font-size: clamp(28px, 4vw, 38px); font-weight: 800; margin: 10px 0 14px; }
+    .privacy-band .eyebrow { color: #fbbf24; }
+    .privacy-band ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 14px; }
+    .privacy-band li { display: flex; gap: 12px; align-items: flex-start; background: rgba(255,255,255,.06); border-radius: 16px; padding: 14px 16px; }
+    .privacy-band li svg { width: 20px; height: 20px; flex: none; margin-top: 2px; stroke: #fbbf24; fill: none; stroke-width: 2.2; stroke-linecap: round; stroke-linejoin: round; }
+    .privacy-band li b { color: #fff; display: block; }
+
+    .steps { counter-reset: s; display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .step { position: relative; padding: 26px 24px 24px; border-radius: 22px; background: var(--card); border: 1px solid var(--border); }
+    .step::before { counter-increment: s; content: counter(s); width: 34px; height: 34px; border-radius: 50%; background: var(--amber); color: #0f172a; font-weight: 800; display: grid; place-items: center; margin-bottom: 14px; }
+    .step h3 { font-size: 18px; margin-bottom: 6px; }
+    .step p { margin: 0; color: var(--subtle); font-size: 15px; }
+    .services { margin-top: 40px; background: var(--card); border: 1px solid var(--border); border-radius: 26px; padding: 28px; }
+    .services h3 { font-size: 20px; }
+    .services > p { margin: 6px 0 0; color: var(--subtle); }
+    .logos { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 18px; }
+    .logos span { background: var(--alt); border-radius: 999px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: var(--text); }
+    .logos span:last-child { background: var(--amber-soft); color: var(--amber-text); }
+    .services .disclaimer { margin-top: 18px; font-size: 12px; color: var(--faint); }
+
+    .plans { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; max-width: 860px; }
+    .plan { border-radius: 26px; padding: 30px; background: var(--card); border: 1px solid var(--border); }
+    .plan.paid { background: var(--hero); border-color: transparent; color: #cbd5e1; position: relative; }
+    .plan.paid h3 { color: #fff; }
+    .plan h3 { font-size: 22px; }
+    .price { font-size: 40px; font-weight: 800; color: var(--ink); letter-spacing: -.02em; margin: 10px 0 2px; }
+    .plan.paid .price { color: #fff; }
+    .price small { font-size: 15px; font-weight: 500; color: var(--subtle); }
+    .plan ul { list-style: none; padding: 0; margin: 20px 0 0; display: grid; gap: 10px; font-size: 15px; }
+    .plan li { display: flex; gap: 10px; }
+    .plan li svg { width: 18px; height: 18px; flex: none; margin-top: 3px; stroke: var(--green); fill: none; stroke-width: 2.6; stroke-linecap: round; stroke-linejoin: round; }
+    .plan.paid li svg { stroke: #fbbf24; }
+    .ribbon { position: absolute; top: 22px; right: 22px; background: #fbbf24; color: #0f172a; font-size: 11px; font-weight: 800; letter-spacing: .08em; padding: 4px 10px; border-radius: 999px; }
+
+    .faq { max-width: 760px; display: grid; gap: 10px; }
+    details { background: var(--card); border: 1px solid var(--border); border-radius: 18px; padding: 18px 22px; }
+    summary { cursor: pointer; font-weight: 600; color: var(--ink); list-style: none; display: flex; justify-content: space-between; gap: 16px; }
+    summary::-webkit-details-marker { display: none; }
+    summary::after { content: "+"; font-size: 22px; line-height: 1; color: var(--amber-deep); }
+    details[open] summary::after { content: "–"; }
+    details p { margin: 12px 0 0; color: var(--subtle); }
+
+    .cta { text-align: center; padding: 56px 24px; border-radius: 32px; background: linear-gradient(135deg, #f59e0b, #d97706); color: #0f172a; }
+    .cta h2 { color: #0f172a; font-size: clamp(28px, 4vw, 40px); font-weight: 800; }
+    .cta p { font-size: 18px; margin: 10px 0 24px; color: #451a03; }
+
+    footer { padding: 40px 0 56px; color: var(--subtle); font-size: 14px; }
+    footer .wrap { display: flex; flex-wrap: wrap; gap: 16px 28px; align-items: center; border-top: 1px solid var(--border); padding-top: 28px; }
+    footer a { text-decoration: none; }
+    footer a:hover { color: var(--ink); }
+    footer .right { margin-left: auto; }
+
+    .btn-lg { padding: 16px 28px; font-size: 17px; box-shadow: 0 10px 30px -10px rgba(217, 119, 6, .6); }
+    .hero-cta { display: flex; flex-wrap: wrap; align-items: center; gap: 14px; margin-bottom: 22px; }
+    .hero-note { font-size: 14px; color: var(--subtle); }
+    .stores .store { transform: scale(.92); transform-origin: left; opacity: .9; }
+    .stats-band { padding: 8px 0 24px; }
+    .stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+    .stats > div { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 22px 24px; }
+    .stats b { display: block; font-size: 40px; font-weight: 800; color: var(--amber-deep); letter-spacing: -.02em; line-height: 1.1; }
+    .stats span { color: var(--subtle); font-size: 15px; }
+    sup { font-size: .65em; color: var(--faint); }
+    .pain { background: var(--card); border: 1px solid var(--border); border-radius: 22px; padding: 24px; }
+    .pain-emoji { font-size: 30px; margin-bottom: 10px; }
+    .pain h3 { font-size: 18px; margin-bottom: 6px; }
+    .pain p { margin: 0; color: var(--subtle); font-size: 15px; }
+    .calc { display: grid; grid-template-columns: 1.1fr .9fr; gap: 32px; background: var(--card); border: 1px solid var(--border); border-radius: 32px; padding: 36px; align-items: center; }
+    .calc h2 { font-size: clamp(26px, 3.6vw, 36px); font-weight: 800; margin: 10px 0 6px; }
+    .calc-sub { color: var(--subtle); margin: 0 0 22px; }
+    .slider { display: block; margin-bottom: 18px; }
+    .slider span { display: flex; justify-content: space-between; font-weight: 600; color: var(--ink); font-size: 15px; margin-bottom: 8px; }
+    .slider b { color: var(--amber-deep); }
+    .slider input { width: 100%; accent-color: var(--amber-deep); height: 28px; }
+    .calc-out { background: var(--hero); color: #cbd5e1; border-radius: 26px; padding: 28px; text-align: center; display: grid; gap: 4px; justify-items: center; }
+    .calc-out b { font-size: 52px; font-weight: 800; color: #fff; letter-spacing: -.03em; line-height: 1.1; }
+    .calc-waste { margin: 14px 0 18px; background: rgba(251,191,36,.14); color: #fde68a; border-radius: 14px; padding: 12px 14px; font-size: 15px; }
+    .calc-waste span { font-weight: 800; color: #fbbf24; font-size: 18px; }
+    .calc-foot { margin-top: 10px; font-size: 12px; color: #94a3b8; }
+    .table-wrap { overflow-x: auto; border-radius: 22px; border: 1px solid var(--border); background: var(--card); }
+    .compare { width: 100%; border-collapse: collapse; font-size: 15px; min-width: 560px; }
+    .compare th, .compare td { padding: 14px 16px; text-align: center; border-bottom: 1px solid var(--border); }
+    .compare th:first-child, .compare td:first-child { text-align: left; color: var(--ink); font-weight: 500; }
+    .compare th { font-size: 13px; color: var(--subtle); font-weight: 600; }
+    .compare .us { background: var(--amber-soft); color: var(--amber-text); font-weight: 800; }
+    .compare th.us { color: var(--amber-text); font-size: 14px; }
+    .compare tr:last-child td { border-bottom: 0; }
+    .compare small { color: var(--faint); display: block; font-size: 11px; }
+    .sources { color: var(--faint); font-size: 12px; padding-bottom: 90px; }
+    .sources a { color: var(--subtle); }
+    .sticky-cta { position: fixed; left: 12px; right: 12px; bottom: 12px; z-index: 20; display: none; align-items: center; justify-content: space-between; gap: 12px; background: var(--hero); color: #cbd5e1; border-radius: 18px; padding: 10px 10px 10px 18px; font-size: 14px; box-shadow: var(--shadow); transform: translateY(150%); transition: transform .3s; }
+    .sticky-cta.show { transform: none; }
+    .sticky-cta .btn { padding: 10px 18px; }
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s ease; }
+    .reveal.in { opacity: 1; transform: none; }
+    @media (prefers-reduced-motion: reduce) { .reveal { opacity: 1; transform: none; transition: none; } }
+
+    @media (max-width: 900px) {
+      .stats, .calc { grid-template-columns: 1fr; }
+      .calc { padding: 24px 20px; }
+      .sticky-cta { display: flex; }
+      .hero .wrap, .privacy-band { grid-template-columns: 1fr; }
+      .hero { padding-top: 40px; }
+      .phone { transform: none; margin-top: 8px; }
+      .grid3, .steps { grid-template-columns: 1fr; }
+      nav .links { display: none; }
+      nav .btn { margin-left: auto; }
+      .privacy-band { padding: 32px 22px; }
+    }
+    @media (max-width: 640px) {
+      .plans { grid-template-columns: 1fr; }
+      section { padding: 56px 0; }
+      footer .right { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <nav>
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/apple-touch-icon.png" alt="" />RenewalGuard</a>
+      <div class="links">
+        <a href="#features">Features</a>
+        <a href="#privacy">Privacy</a>
+        <a href="#pricing">Pricing</a>
+        <a href="#faq">FAQ</a>
+      </div>
+      <a class="btn btn-dark" href="https://splendid-renew-guard-flow.base44.app/register" data-cta="nav">Start free</a>
+    </div>
+  </nav>
+
+  <header class="hero">
+    <div class="wrap">
+      <div>
+        <div class="eyebrow">Subscriptions · Bills · Free trials</div>
+        <h1>Stop paying for things <span>you forgot to cancel.</span></h1>
+        <p class="lead">Track your subscriptions, free trials and bills in one place — and get phone and email reminders before anything renews. No bank login needed. Free for up to 5 subscriptions.</p>
+        <div class="hero-cta">
+          <a class="btn btn-amber btn-lg" href="https://splendid-renew-guard-flow.base44.app/register" data-cta="hero">Start tracking free</a>
+          <span class="hero-note">No card · No bank login · Takes 30 seconds</span>
+        </div>
+        <div class="stores" id="download">
+          <a class="store" href="#download" aria-label="Download on the App Store (coming soon)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M16.37 12.6c-.03-2.6 2.12-3.85 2.22-3.91-1.21-1.77-3.09-2.01-3.76-2.04-1.6-.16-3.12.94-3.93.94-.81 0-2.06-.92-3.39-.89-1.74.03-3.35 1.01-4.25 2.57-1.81 3.14-.46 7.79 1.3 10.34.86 1.25 1.89 2.65 3.24 2.6 1.3-.05 1.79-.84 3.36-.84 1.57 0 2.01.84 3.38.81 1.4-.02 2.29-1.27 3.14-2.53.99-1.45 1.4-2.85 1.42-2.92-.03-.01-2.72-1.04-2.73-4.13zM13.8 4.96c.72-.87 1.2-2.07 1.07-3.27-1.03.04-2.28.69-3.02 1.55-.66.77-1.24 2-1.09 3.18 1.15.09 2.32-.58 3.04-1.46z"/></svg>
+            <span><small>Download on the</small><b>App Store</b></span><em class="soon">SOON</em>
+          </a>
+          <a class="store" href="#download" aria-label="Get it on Google Play (coming soon)">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.6 1.8c-.3.3-.5.8-.5 1.4v17.6c0 .6.2 1.1.5 1.4l.1.1 9.8-9.8v-.2L3.7 1.7l-.1.1zm13.2 13.2-3.3-3.3v-.2l3.3-3.3.1.1 3.9 2.2c1.1.6 1.1 1.7 0 2.3l-3.9 2.2-.1 0zm-.1.1L13.4 12 3.6 21.8c.4.4.9.4 1.6.1l11.5-6.8M16.7 8.9 5.2 2.1c-.7-.4-1.2-.3-1.6.1l9.8 9.8 3.3-3.1z"/></svg>
+            <span><small>Get it on</small><b>Google Play</b></span><em class="soon">SOON</em>
+          </a>
+        </div>
+        <p class="webapp">iPhone & Android apps launching soon — start in your browser today and your account carries over.</p>
+        <div class="trust">
+          <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Free for up to 5 subscriptions</span>
+          <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>No bank connection</span>
+          <span><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Made in the UK, in £</span>
+        </div>
+      </div>
+
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="notch"></div>
+          <div class="m-toast"><img src="/apple-touch-icon.png" alt="" /><div><strong>Netflix renews in 3 days</strong><span>£10.99 due 14 Oct.</span></div></div>
+          <div class="m-eyebrow">OVERVIEW</div>
+          <div class="m-title">Good to see you, Sam</div>
+          <div class="m-spend"><small>Estimated monthly spend</small><b>£86.42</b><div class="m-seg"><i>Weekly</i><i class="on">Monthly</i><i>Annual</i></div></div>
+          <div class="m-h">Due this week</div>
+          <div class="m-card"><div class="m-logo" style="background:#e50914">N</div><div><strong>Netflix</strong><span>£10.99 · Monthly</span></div><em class="m-badge">3 days</em></div>
+          <div class="m-card"><div class="m-logo" style="background:#1db954">S</div><div><strong>Spotify</strong><span>£11.99 · Monthly</span></div><em class="m-badge">5 days</em></div>
+          <div class="m-card"><div class="m-logo" style="background:#113ccf">D</div><div><strong>Disney+</strong><span>£0.00 · Free trial</span></div><em class="m-badge trial">Trial · 6 days</em></div>
+          <div class="m-h">Due this month</div>
+          <div class="m-card"><div class="m-logo" style="background:#00a19a">P</div><div><strong>PureGym</strong><span>£24.99 · Monthly</span></div><em class="m-badge" style="background:var(--alt);color:var(--subtle)">18 days</em></div>
+          <div class="m-card"><div class="m-logo" style="background:#e4002b">TV</div><div><strong>TV Licence</strong><span>£174.50 · Yearly</span></div><em class="m-badge" style="background:var(--alt);color:var(--subtle)">26 days</em></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="stats-band" aria-label="UK subscription facts">
+      <div class="wrap stats reveal">
+        <div><b data-count="1.6" data-prefix="£" data-suffix="bn" data-decimals="1">£1.6bn</b><span>a year spent on unwanted subscriptions in the UK<sup>1</sup></span></div>
+        <div><b data-count="26" data-suffix="%">26%</b><span>of UK adults accidentally signed up to a subscription last year<sup>2</sup></span></div>
+        <div><b data-count="39" data-suffix="%">39%</b><span>of them forgot to cancel a free trial<sup>2</sup></span></div>
+      </div>
+    </section>
+
+    <section id="problem">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">Sound familiar?</div>
+          <h2 data-copy="problem-title">Easy to sign up. Easy to forget. Expensive to notice.</h2>
+        </div>
+        <div class="grid3">
+          <div class="pain reveal"><div class="pain-emoji">🫠</div><h3 data-copy="pain1-title">"I forgot to cancel the free trial"</h3><p data-copy="pain1-text">You took a 30-day trial for one show. Three months later it's still on your bank statement.</p></div>
+          <div class="pain reveal"><div class="pain-emoji">📆</div><h3 data-copy="pain2-title">"It auto-renewed without me knowing"</h3><p data-copy="pain2-text">An annual membership renewed overnight — and you only noticed once the money had gone.</p></div>
+          <div class="pain reveal"><div class="pain-emoji">🧾</div><h3 data-copy="pain3-title">"My insurance went up at renewal"</h3><p data-copy="pain3-text">The renewal date slipped past, so it rolled over at a higher price — with no time to shop around.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="calculator" style="padding-top: 24px">
+      <div class="wrap">
+        <div class="calc reveal">
+          <div>
+            <div class="eyebrow">Quick check</div>
+            <h2>How much is slipping through the cracks?</h2>
+            <p class="calc-sub">Move the sliders to match your subscriptions.</p>
+            <label class="slider"><span>Subscriptions you pay for <b id="c-n">6</b></span><input id="in-n" type="range" min="1" max="25" value="6" /></label>
+            <label class="slider"><span>Average cost per month <b id="c-avg">£8.50</b></span><input id="in-avg" type="range" min="1" max="40" step="0.5" value="8.5" /></label>
+            <label class="slider"><span>How many you rarely use <b id="c-f">1</b></span><input id="in-f" type="range" min="0" max="10" value="1" /></label>
+          </div>
+          <div class="calc-out" aria-live="polite">
+            <small>You spend about</small>
+            <b id="out-year">£612</b>
+            <small>a year on subscriptions</small>
+            <div class="calc-waste">
+              <span id="out-waste">£102</span> a year could be going on things you barely use.
+            </div>
+            <a class="btn btn-amber" href="https://splendid-renew-guard-flow.base44.app/register" data-cta="calculator">Find my forgotten subscriptions</a>
+            <small class="calc-foot">UK average: £50.60 a month<sup>3</sup></small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="features">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">How RenewalGuard helps</div>
+          <h2>Built around the moments that cost you money.</h2>
+          <p>Add a subscription in seconds — pick from 80+ popular UK services or type any name — and let RenewalGuard do the remembering.</p>
+        </div>
+        <div class="grid3">
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.94 1.94 0 0 0 3.4 0"/></svg></div><h3>Forgot to cancel the trial?</h3><p>Add the trial end date and get a reminder before it turns into a paid plan.</p></div>
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><h3>Reminders that never arrive?</h3><p>Get alerts on your phone <em>and</em> by email — so if one slips through, the other doesn't. Test them any time.</p></div>
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M8 2v4M16 2v4"/><path d="M3 10h18"/><path d="M5 4h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2z"/></svg></div><h3>Annual renewals catch you out?</h3><p>See yearly plans and insurance coming in time to cancel, switch or shop around.</p></div>
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M3 3v18h18"/><path d="m7 15 4-4 3 3 5-6"/></svg></div><h3>No idea what it all costs?</h3><p>Weekly, monthly and yearly totals show what your subscriptions really add up to.</p></div>
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M10 13a5 5 0 0 0 7.54.54l3-3a5 5 0 0 0-7.07-7.07l-1.72 1.71"/><path d="M14 11a5 5 0 0 0-7.54-.54l-3 3a5 5 0 0 0 7.07 7.07l1.71-1.71"/></svg></div><h3>Can't find the cancel button?</h3><p>Save each service's cancellation link and open it in one tap when you're ready to leave.</p></div>
+          <div class="feature reveal"><div class="ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><h3>Don't want to link your bank?</h3><p>You add what you pay — no bank login, no Open Banking re-connects every 90 days.</p></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="privacy" style="padding-top: 24px">
+      <div class="wrap">
+        <div class="privacy-band">
+          <div>
+            <div class="eyebrow">Private by design</div>
+            <h2>No bank login. Your data stays yours.</h2>
+            <p>Bank-linked apps can miss annual plans, app-store charges and shared accounts — and they need access to your finances. RenewalGuard is manual on purpose: you stay in control of exactly what's tracked.</p>
+          </div>
+          <ul>
+            <li><svg viewBox="0 0 24 24"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg><span><b>Never connects to your bank</b>No card details, no open banking, no account access.</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span><b>Only your account sees your list</b>Your data is never sold or shared for marketing.</span></li>
+            <li><svg viewBox="0 0 24 24"><path d="M3 6h18M8 6V4h8v2M6 6l1 14h10l1-14"/></svg><span><b>Delete everything, any time</b>One tap in Account settings removes your data permanently.</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="compare" style="padding-top: 24px">
+      <div class="wrap">
+        <div class="section-head reveal">
+          <div class="eyebrow">Why not just…</div>
+          <h2>Better than your memory. Safer than a bank app.</h2>
+        </div>
+        <div class="table-wrap reveal">
+          <table class="compare">
+            <thead><tr><th></th><th class="us">RenewalGuard</th><th>Bank-linked apps</th><th>Notes / spreadsheet</th></tr></thead>
+            <tbody>
+              <tr><td>Reminds you before you're charged</td><td class="us">✓</td><td>Varies</td><td>✗</td></tr>
+              <tr><td>Tracks free trials before they convert</td><td class="us">✓</td><td>✗ <small>(no charge to detect yet)</small></td><td>✗</td></tr>
+              <tr><td>No bank or card access needed</td><td class="us">✓</td><td>✗</td><td>✓</td></tr>
+              <tr><td>Catches annual &amp; app-store plans</td><td class="us">✓</td><td>Often missed</td><td>If you remember</td></tr>
+              <tr><td>Weekly, monthly &amp; yearly totals</td><td class="us">✓</td><td>✓</td><td>Manual maths</td></tr>
+              <tr><td>Free to start</td><td class="us">✓</td><td>Often paid</td><td>✓</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">How it works</div>
+          <h2>Set up in under a minute.</h2>
+        </div>
+        <div class="steps">
+          <div class="step"><h3>Add what you pay for</h3><p>Pick from popular UK services or type any name — cost, cycle and renewal date.</p></div>
+          <div class="step"><h3>Get a heads-up</h3><p>We remind you before each renewal or trial ends, by phone alert and email.</p></div>
+          <div class="step"><h3>Keep, pause or cancel</h3><p>Decide calmly, with your full monthly and yearly spend in view.</p></div>
+        </div>
+        <div class="services">
+          <h3>Works with the things you already pay for</h3>
+          <p>Choose from 80+ popular UK subscriptions and bills — or add anything else by name.</p>
+          <div class="logos"><span>Netflix</span><span>Spotify</span><span>Sky</span><span>BT</span><span>Disney+</span><span>PureGym</span><span>Octopus Energy</span><span>Amazon Prime</span><span>iCloud+</span><span>giffgaff</span><span>Council Tax</span><span>TV Licence</span><span>and 70+ more</span></div>
+          <p class="disclaimer">Service names are used only to describe what you can track. RenewalGuard is independent and not affiliated with, or endorsed by, any of these companies.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="pricing">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">Pricing</div>
+          <h2>Start free. Upgrade when you need more.</h2>
+        </div>
+        <div class="plans">
+          <div class="plan">
+            <h3>Free</h3>
+            <div class="price">£0 <small>forever</small></div>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Up to 5 subscriptions</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Phone & email reminders 3 days before</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Free-trial tracking</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Weekly, monthly & annual totals</li>
+            </ul>
+          </div>
+          <div class="plan paid">
+            <span class="ribbon">COMING SOON</span>
+            <h3>Paid</h3>
+            <div class="price">More control</div>
+            <ul>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Unlimited subscriptions</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Custom reminders — e.g. 2 weeks, 1 week & 1 day before</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>Spend breakdown by category</li>
+              <li><svg viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></svg>CSV export of your data</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="faq" style="padding-top: 24px">
+      <div class="wrap">
+        <div class="section-head">
+          <div class="eyebrow">FAQ</div>
+          <h2>Questions, answered.</h2>
+        </div>
+        <div class="faq">
+          <details><summary>Do I need to connect my bank?</summary><p>No — never. You add your subscriptions yourself, so RenewalGuard has no access to your bank, cards or transactions. No Open Banking, no reconnecting every 90 days.</p></details>
+          <details><summary>What if I miss a notification?</summary><p>Reminders come by phone notification <em>and</em> email, so you have two chances to catch them. You can send yourself a test alert any time, and snooze a reminder or mark a bill paid once it's dealt with.</p></details>
+          <details><summary>Isn't it daft to pay a subscription to track subscriptions?</summary><p>We agree — that's why RenewalGuard is free for up to 5 subscriptions, with reminders included. A Paid plan for unlimited subscriptions and custom reminder timing is coming soon, and it's entirely optional.</p></details>
+          <details><summary>What happens if I change phone?</summary><p>Your list is saved to your RenewalGuard account, not just your phone. Log in on a new phone or in your web browser and everything is there.</p></details>
+          <details><summary>Does it work with UK services?</summary><p>Yes — it's built in the UK, in £, with 80+ popular UK services ready to pick: streaming, broadband, mobile, energy, gyms, council tax, TV licence and more. Anything else, just type the name.</p></details>
+          <details><summary>Can RenewalGuard cancel subscriptions for me?</summary><p>No — you stay in control. Save each service's cancellation link and open it in one tap when you're ready.</p></details>
+          <details><summary>Can I delete my data?</summary><p>Yes. Go to Account settings → Delete account and everything is removed permanently and immediately.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <section style="padding-top: 24px">
+      <div class="wrap">
+        <div class="cta">
+          <h2>Never get caught out by a free trial again.</h2>
+          <p>Set your first reminder in under a minute. Free for up to 5 subscriptions — no bank login, no card.</p>
+          <a class="btn btn-dark btn-lg" href="https://splendid-renew-guard-flow.base44.app/register" data-cta="final">Stop surprise renewals</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <a class="brand" href="/"><img src="/apple-touch-icon.png" alt="" />RenewalGuard</a>
+      <a href="/privacy.html">Privacy policy</a>
+      <a href="mailto:cris@fortunastreams.com">Support</a>
+      <span class="right">© <span id="y">2026</span> RenewalGuard · Made in the UK</span>
+    </div>
+  </footer>
+  <div class="wrap sources">
+    <p><sup>1</sup> UK Government figures, end of 2024, reported by <a href="https://home.barclays/insights/2025/10/Next-Phase-Subscription-Economy/" rel="noopener">Barclays (Oct 2025)</a>. <sup>2</sup> <a href="https://www.citizensadvice.org.uk/about-us/media-centre/press-releases/consumers-spend-688-million-on-unused-subscriptions-in-the-last-year/" rel="noopener">Citizens Advice (Mar 2024)</a>. <sup>3</sup> Barclays, average monthly subscription spend among subscribers. Calculator figures are estimates.</p>
+  </div>
+  <div class="sticky-cta" id="sticky"><span>Free for up to 5 subscriptions</span><a class="btn btn-amber" href="https://splendid-renew-guard-flow.base44.app/register" data-cta="sticky">Start free</a></div>
+  <script>
+    document.getElementById('y').textContent = new Date().getFullYear();
+    const gbp = (v, d = 0) => '£' + v.toLocaleString('en-GB', { minimumFractionDigits: d, maximumFractionDigits: d });
+    // Savings calculator
+    const n = document.getElementById('in-n'), avg = document.getElementById('in-avg'), f = document.getElementById('in-f');
+    function calc() {
+      if (+f.value > +n.value) f.value = n.value;
+      const yearly = n.value * avg.value * 12, waste = f.value * avg.value * 12;
+      document.getElementById('c-n').textContent = n.value;
+      document.getElementById('c-avg').textContent = gbp(+avg.value, 2);
+      document.getElementById('c-f').textContent = f.value;
+      document.getElementById('out-year').textContent = gbp(Math.round(yearly));
+      document.getElementById('out-waste').textContent = gbp(Math.round(waste));
+    }
+    [n, avg, f].forEach((el) => el.addEventListener('input', calc));
+    calc();
+    // Reveal on scroll + count-up stats
+    const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const countUp = (el) => {
+      const to = +el.dataset.count, dec = +(el.dataset.decimals || 0), pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+      if (reduce) return;
+      const t0 = performance.now();
+      const step = (now) => { const p = Math.min(1, (now - t0) / 1100), v = to * (1 - Math.pow(1 - p, 3)); el.textContent = pre + v.toFixed(dec) + suf; if (p < 1) requestAnimationFrame(step); };
+      requestAnimationFrame(step);
+    };
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      e.target.classList.add('in');
+      e.target.querySelectorAll('[data-count]').forEach(countUp);
+      io.unobserve(e.target);
+    }), { threshold: 0.2 });
+    document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+    // Sticky CTA appears once the hero button scrolls away
+    const sticky = document.getElementById('sticky'), heroBtn = document.querySelector('[data-cta="hero"]');
+    new IntersectionObserver(([e]) => sticky.classList.toggle('show', !e.isIntersecting && e.boundingClientRect.top < 0)).observe(heroBtn);
+  </script>
+</body>
+</html>
